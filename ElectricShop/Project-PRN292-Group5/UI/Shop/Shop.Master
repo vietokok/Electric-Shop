@@ -1,0 +1,54 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Shop.master.cs" Inherits="Project_PRN292_Group5.UI.Shop.Shop" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Electronic Shop</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link href="../../Assets/Shop/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../Assets/Shop/css/slick.css" rel="stylesheet" />
+    <link href="../../Assets/Shop/css/slick-theme.css" rel="stylesheet" />
+    <link href="../../Assets/Shop/css/nouislider.min.css" rel="stylesheet" />
+    <link href="../../Assets/Shop/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../Assets/Shop/css/style.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header>
+        <div id="top-header">
+            <div class="container">
+                <ul class="header-links pull-left">
+                    <li><a href="#"><i class="fa fa-phone"></i>+84 987.123.456</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i>group5@email.com</a></li>
+                    <li><a href="#"><i class="fa fa-map-marker"></i>FPT Univesity</a></li>
+                </ul>
+                <div class="dropdown pull-right header-links" style="color:white;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-o"></i><span>&nbsp;&nbsp;</span><%=Session["Name"].ToString()%>
+                    </a>
+                    <div class="user-menu dropdown-menu" style="background-color:#1E1F29;">
+                        <a class="dropdown-item logout" href="../LogOut.aspx"><i class="fa fa-power-off"></i>Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+
+    <script src="../../Assets/Shop/js/jquery.min.js"></script>
+    <script src="../../Assets/Shop/js/bootstrap.min.js"></script>
+    <script src="../../Assets/Shop/js/slick.min.js"></script>
+    <script src="../../Assets/Shop/js/nouislider.min.js"></script>
+    <script src="../../Assets/Shop/js/jquery.zoom.min.js"></script>
+    <script src="../../Assets/Shop/js/main.js"></script>
+</body>
+</html>
+

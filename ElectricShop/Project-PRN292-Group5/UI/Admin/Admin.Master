@@ -1,0 +1,98 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="Project_PRN292_Group5.UI.Admin.Admin" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Electric Shop Online</title>
+    <meta name="description" content="Electric Shop Online">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../Assets/Admin/Framework/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <link href="../../Assets/Admin/Framework/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../Assets/Admin/Css/style.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <!-- Left Panel -->
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div class="navbar-header">
+
+                <a class="navbar-brand" href="#">
+                    <img src="../../Assets/Admin/images/logo.png" alt="Logo"></a>
+            </div>
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="menu-title">Hàng Hóa</li>
+                    <!-- /.menu-title -->
+                    <li class="menu-item-has-children">
+                        <a href="ProductShow.aspx" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-laptop"></i>Các Mặt Hàng</a>
+                    </li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="menu-icon fa fa-chain"></i>Nhập hàng</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-anchor"></i><a href="ImportProduct.aspx">Sản phẩm hiện có</a></li>
+                            <li><i class="menu-icon fa fa-plus"></i><a href="AddProduct.aspx">Sản phẩm mới</a></li>
+                            <li><i class="menu-icon fa fa-history"></i><a href="ImportProductHistory.aspx">Lịch sử nhập hàng</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-title">Quản lý</li>
+                    <!-- /.menu-title -->
+                    <li class="menu-item-has-children">
+                        <a href="OrderManagement.aspx" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-bar-chart"></i>Thống Kê Bán Hàng</a>
+                    </li>
+                    <li>
+                        <a href="CustomerManagement.aspx"><i class="menu-icon fa fa-address-card"></i>Khách Hàng</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                        <a href="StaffManagement.aspx" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-male"></i>Nhân Viên</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    </aside>
+    <!-- /#left-panel -->
+    <!-- Left Panel -->
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header id="header" class="header">
+            <div class="header-menu">
+                <div class="col-sm-7">
+                    <div class="header-left">
+                          Administrator               
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-o"></i><span>&nbsp;&nbsp;</span><%=Session["Name"].ToString()%>
+                        </a>
+                        <div class="user-menu dropdown-menu">
+                            <a class="dropdown-item" href="../LogOut.aspx"><i class="fa fa-power-off"></i>Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- /header -->
+        <!-- Right Panel -->
+        <div class="content mt-3">
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </div>
+    <!-- /#right-panel -->
+
+    <script src="../../Assets/Admin/Framework/jquery-3.4.1.min.js"></script>
+    <script src="../../Assets/Admin/Framework/popper.min.js"></script>
+    <script src="../../Assets/Admin/Framework/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

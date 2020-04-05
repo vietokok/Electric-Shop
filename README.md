@@ -1,4 +1,4 @@
-### PRN292 Project at Univesity
+### PRN292 Project at FPT Univesity
 ### Group member
 1. Võ Khắc Việt
 2. Đỗ Trọng Anh Tuấn

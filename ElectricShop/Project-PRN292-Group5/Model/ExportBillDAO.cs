@@ -79,7 +79,7 @@ namespace Project_PRN292_Group5.Entity
             }
         }
 
-        public List<ExportBill> GetExportBill(int numberInPage, int pageCurrent, string key, string sort)
+        public List<ExportBill> GetExportBill(int numberInPage, int pageCurrent, string key)
         {
             List<ExportBill> listExportBill = new List<ExportBill>();
             conn = DBContext.GetDBConnection();
@@ -92,21 +92,66 @@ namespace Project_PRN292_Group5.Entity
                             "FROM     Customer INNER JOIN\n" +
                             "ExportBill ON Customer.customer_id = ExportBill.customer_id where Customer.customer_name like @key) ab) xy\n" +
                             "Where row_num >= @from	 and row_num <= @to";
-                if (sort != null && sort == "DESC")
-                {
-                    query += " Order by export_date DESC";
-                }
-
-                if (sort != null && sort == "ASC")
-                {
-                    query += " Order by export_date ASC";
-                }
+              
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = query;
                 int from = (pageCurrent - 1) * numberInPage + 1;
                 int to = pageCurrent * numberInPage;
                 cmd.Parameters.Add(new SqlParameter("@key", "%" + key + "%"));
+                cmd.Parameters.Add(new SqlParameter("@from", from));
+                cmd.Parameters.Add(new SqlParameter("@to", to));
+                using (DbDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            ExportBill e = new ExportBill();
+                            e.ID = Convert.ToInt32(reader["id"]);
+                            e.Date = reader["export_date"].ToString();
+                            e.TotalPrice1 = Convert.ToSingle(reader["total_price"]);
+                            Customer c = new Customer();
+                            c.Name = reader["customer_name"].ToString();
+                            e.Customer = c;
+
+                            listExportBill.Add(e);
+                        }
+                    }
+                }
+                return listExportBill;
+            }
+
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public List<ExportBill> GetExportBill1(int numberInPage, int pageCurrent, string begin,string end)
+        {
+            List<ExportBill> listExportBill = new List<ExportBill>();
+            conn = DBContext.GetDBConnection();
+            conn.Open();
+            try
+            {
+                string query = "Select * from( Select *, ROW_NUMBER() OVER (ORDER BY id ASC) as row_num FROM\n" +
+                            "\n" +
+                            "(SELECT ExportBill.id, ExportBill.export_date, Customer.customer_name, ExportBill.total_price\n" +
+                            "FROM     Customer INNER JOIN\n" +
+                            "ExportBill ON Customer.customer_id = ExportBill.customer_id where export_date >= @begin and export_date <= @end) ab) xy\n" +
+                            "Where row_num >= @from	 and row_num <= @to";
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = query;
+                int from = (pageCurrent - 1) * numberInPage + 1;
+                int to = pageCurrent * numberInPage;
+                cmd.Parameters.Add(new SqlParameter("@begin", begin));
+                cmd.Parameters.Add(new SqlParameter("@end", end));
                 cmd.Parameters.Add(new SqlParameter("@from", from));
                 cmd.Parameters.Add(new SqlParameter("@to", to));
                 using (DbDataReader reader = cmd.ExecuteReader())
@@ -261,6 +306,43 @@ namespace Project_PRN292_Group5.Entity
                 cmd.Connection = conn;
                 cmd.CommandText = query;
                 cmd.Parameters.Add(new SqlParameter("@key", "%" + key + "%"));
+                using (DbDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            count = Convert.ToInt32(reader["rownum"]);
+                        }
+                        return (count % numberProductInPage == 0) ? (count / numberProductInPage) : (count / numberProductInPage + 1);
+                    }
+                }
+                return -1;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public int getNumberPage1(int numberProductInPage, string begin,string end )
+        {
+            int count = -1;
+            conn = DBContext.GetDBConnection();
+            conn.Open();
+            try
+            {
+                string query = "SELECT COUNT(*) as rownum FROM \n" +
+                   "Customer INNER JOIN\n" +
+                   "ExportBill ON Customer.customer_id = ExportBill.customer_id where export_date >= @begin and export_date <= @end";
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = query;
+                cmd.Parameters.Add(new SqlParameter("@begin", begin));
+                cmd.Parameters.Add(new SqlParameter("@end", end));
                 using (DbDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)

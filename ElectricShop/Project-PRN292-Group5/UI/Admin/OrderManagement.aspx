@@ -14,16 +14,30 @@
         int pageCurrent = (int)Session["pageCurrent"];
         string check = (string)Session["check"];
     %>
-
+    <style>
+    </style>
     <div>
-        <form action="OrderManagement.aspx" method="post">
-            <input class="search-product" type="text" name="key" value="<%= key!=null ? key: "" %>" placeholder="Tìm tên khách hàng" />
-            <input type="checkbox" name="check" value="DESC" class="ml-2 mr-2" <%=check=="DESC"?"checked":"" %> />Gần đây nhất
-            <input type="checkbox" name="check" value="ASC" class="ml-2 mr-2" <%=check=="ASC"?"checked":"" %> />Lâu nhất
-           
-            <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-        </form>
+        <select id="123ch" onchange="changedType(this)" class="mb-4">
+            <option value="xname">Thống kê theo tên</option>
+            <option value="xdate">Thống kê theo ngày</option>
+        </select>
     </div>
+    <divs>
+        <form action="OrderManagement.aspx" method="post">
+            <div style="display: inline-block">
+                <div class="" id="customerName">
+                    <input class="search-product" type="text" name="key" placeholder="Tìm tên khách hàng" />
+                </div>
+                <div id="date" class="hidden">
+                    <input type="date" name="begin" />
+                    <input type="date" name="end" />
+                </div>
+            </div>
+            <div  style="display: inline-block">
+                <button  class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+    </divs>
     <%-- hien thi thong tin chung hoa don --%>
     <div>
         <table class="table table-hover">
@@ -161,4 +175,29 @@
     </div>
 
     <%} %>
+
+    <script>
+        // Hàm xử lý khi thẻ select thay đổi giá trị được chọn
+        // obj là tham số truyền vào và cũng chính là thẻ select
+
+        function changedType(obj) {
+
+
+            var value = obj.value;
+
+            if (value === 'xname') {
+                var xremove = document.getElementById("customerName");
+                var xadd = document.getElementById('date');
+                xadd.classList.add("hidden");
+                xremove.classList.remove("hidden");
+            }
+            else if (value === 'xdate') {
+                var xremove = document.getElementById("date");
+                var xadd = document.getElementById('customerName');
+                xadd.classList.add("hidden");
+                xremove.classList.remove("hidden");
+            }
+        }
+
+    </script>
 </asp:Content>

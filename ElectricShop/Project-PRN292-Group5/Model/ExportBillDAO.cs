@@ -79,7 +79,7 @@ namespace Project_PRN292_Group5.Entity
             }
         }
 
-        public List<ExportBill> GetExportBill(int numberInPage, int pageCurrent, string key)
+        public List<ExportBill> GetExportBill(int numberInPage, int pageCurrent, string key, string sort)
         {
             List<ExportBill> listExportBill = new List<ExportBill>();
             conn = DBContext.GetDBConnection();
@@ -92,6 +92,15 @@ namespace Project_PRN292_Group5.Entity
                             "FROM     Customer INNER JOIN\n" +
                             "ExportBill ON Customer.customer_id = ExportBill.customer_id where Customer.customer_name like @key) ab) xy\n" +
                             "Where row_num >= @from	 and row_num <= @to";
+                if (sort != null && sort == "DESC")
+                {
+                    query += " Order by export_date DESC";
+                }
+
+                if (sort != null && sort == "ASC")
+                {
+                    query += " Order by export_date ASC";
+                }
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = query;

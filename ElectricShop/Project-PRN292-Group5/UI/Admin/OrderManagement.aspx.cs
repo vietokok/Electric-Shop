@@ -18,7 +18,7 @@ namespace Project_PRN292_Group5.UI.Admin
             if (Session["check"] == null)
             {
                 bDAO = new ExportBillDAO();
-                loadProduct("");
+                loadProduct("","");
             }
             else
             {
@@ -37,7 +37,8 @@ namespace Project_PRN292_Group5.UI.Admin
                 if (Request.QueryString["pageChoose"] != null)
                 {
                     string keyword = (string)Session["key"];
-                    loadProduct(keyword);
+                    string check = (string)Request.Form["check"];
+                    loadProduct(keyword,check);
                     return;
                 }
             }
@@ -49,10 +50,12 @@ namespace Project_PRN292_Group5.UI.Admin
         {
             string keyword = (string)Request.Form["key"];
             Session["key"] = keyword;
-            loadProduct(keyword);
+            string check = (string)Request.Form["check"];
+            Session["check"] = check;
+            loadProduct(keyword,check);
         }
 
-        public void loadProduct(string key)
+        public void loadProduct(string key, string sort)
         {
             bDAO = new ExportBillDAO();
 
@@ -67,7 +70,7 @@ namespace Project_PRN292_Group5.UI.Admin
                 pageCurrent = Convert.ToInt32(raw_page);
             }
             Session["totalPage"] = bDAO.getNumberPage(numberInPage, key);
-            Session["listOrder"] = bDAO.GetExportBill(numberInPage, pageCurrent, key);
+            Session["listOrder"] = bDAO.GetExportBill(numberInPage, pageCurrent, key,sort);
             Session["pageCurrent"] = pageCurrent;
 
         }

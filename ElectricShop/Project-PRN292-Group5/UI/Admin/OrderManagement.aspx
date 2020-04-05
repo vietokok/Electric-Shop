@@ -12,11 +12,15 @@
         string key = (string)Session["key"];
         int totalPage = (int)Session["totalPage"];
         int pageCurrent = (int)Session["pageCurrent"];
+        string check = (string)Session["check"];
     %>
 
     <div>
         <form action="OrderManagement.aspx" method="post">
             <input class="search-product" type="text" name="key" value="<%= key!=null ? key: "" %>" placeholder="Tìm tên khách hàng" />
+            <input type="checkbox" name="check" value="DESC" class="ml-2 mr-2" <%=check=="DESC"?"checked":"" %> />Gần đây nhất
+            <input type="checkbox" name="check" value="ASC" class="ml-2 mr-2" <%=check=="ASC"?"checked":"" %> />Lâu nhất
+           
             <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
         </form>
     </div>
@@ -48,6 +52,7 @@
                             <p>
                                 <button class="btn btn-outline-dark" type="submit" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     Chi Tiết                               
+                               
                                 </button>
                             </p>
                         </form>
@@ -93,17 +98,23 @@
                         <br>
                         Bảng Giá:  Bảng giá chung
                    
+                   
                     </div>
                     <div class="col-sm-12 col-md-4 ">
                         Trạng Thái:  Hoàn thành
        
+                       
+
                         <br>
                         Chi Nhánh:  Chi nhánh trung tâm
        
+                       
+
                         <br>
                         Người Bán:  <%=ex.Staff.Name %>
                         <br>
                         Kênh Bán:  Bán trực tiếp
+                   
                    
                     </div>
                     <div class="col-sm-12 col-md-4 ">
